@@ -1,0 +1,116 @@
+#Q2
+npv <- function(initial, y1, y2, y3, y4, r) {
+  arr <- c(y1,y2,y3,y4)
+  count <- 0
+  for(i in 1:length(arr)) {
+    sum <- arr[i] / ((1 + r) ^ i)
+    count <- count + sum
+  }
+  ans <- -initial + count
+  print(noquote(paste("Net present value = $", round(ans,3), sep = '')))
+  
+  if(ans <= 0) {
+    print(noquote("Reject the project."))
+  }
+  else {
+    print(noquote("Accept the project."))
+  }
+}
+
+#Q3
+#changing cost of cap does not change IRR
+irr <- function(cf0, cf1,cf2,cf3,cf4, ror) {
+  ans <- FinancialMath::IRR(cf0,c(cf1,cf2,cf3,cf4),c(1,2,3,4))
+  print(noquote(paste("IRR: ", round(ans * 100,3), "%", sep = "")))
+  
+  if(round(100 * ans, 3) <= ror * 100) {
+    print("Reject the project.")
+  }
+  else print("Accept the project.")
+}
+
+#Q4
+initial.invest <- function(irr, wacc, yr1, fol) {
+  #part 1
+  arr1 <- c(yr1, fol, fol, fol)
+  count1 <- 0
+  for (i in 1:length(arr1)) {
+    sum1 <- arr1[i] / (1 + irr)^i
+    count1 <- count1 + sum1
+  }  
+  print(noquote(paste("Initial Investment: $", format(round(count1, 2), big.mark = ",", sci = F), sep = "")))
+  
+  #part 2
+  
+  arr2 <- c(yr1, fol, fol, fol)
+  count2 <- 0
+  for (i in 1:length(arr2)) {
+    sum2 <- arr2[i] / (1 + wacc)^i
+    count2 <- count2 + sum2
+  }
+  ans2 <- -count1 + count2
+  print(noquote(paste("NPV: $", format(round(ans2,2), big.mark = ",", sci = F), sep = "")))
+}
+
+#Q5
+#irr calc reinvested at IRR
+#npv reinvested at required rate of return
+#npv method is better
+
+#Q7 -  normal cf only523
+mirr <- function(wacc, cf0, cf1, cf2, cf3, cf4) {
+  arr <- c(cf1,cf2,cf3,cf4)
+  count <- 0
+  for (i in 1:length(arr)) {
+    sum <- arr[i] * ((1 + wacc)^(length(arr) - i))
+    count <- count + sum
+  }
+  fv <- count
+  #pv / pv ^ (1/n) -1
+  ans.mirr <- ((fv / cf0)^(1/length(arr))) - 1
+  print(noquote(paste("MIRR: ", round(ans.mirr * 100, 2), "%", sep = "")))
+  
+  if (ans.mirr > wacc) {
+    print("Accept the project.")
+  }
+  else print("Reject the project.")
+}
+
+#Q10
+pi <- function(initial, yr1, yr2, yr3, yr4, wacc) {
+  arr <- c(yr1,yr2,yr3,yr4)
+  count <- 0
+  for (i in 1:length(arr)) {
+    sum <- arr[i] / (1 + wacc)^i
+    count <- count + sum
+  }
+  profit.i <- count / initial
+  print(noquote(paste("Profitability Index: $", profit.i, sep = "")))
+  if(profit.i > 1) {
+    print("Accept the project.")
+  }
+  else print("Reject the project.")
+}
+
+#Q12
+pbp <- function(pb, wacc, yr1, yr2, yr3, yr4) {
+  arr <- c(yr1, yr2, yr3, yr4)
+  count <- 0
+  for (i in 1:length(arr)) {
+    sum <- arr[i] / (1 + wacc)^i
+    count <- count + sum
+  }
+  
+  npv <- arr[round(pb, 0) - 1] + arr[round(pb,0)] + (arr[round(pb,0) + 1] * (pb %% 2))
+  
+  ans <- -npv + count
+  
+  print(noquote(paste("NPV: $", round(ans,2), sep = "")))
+}
+
+#Q15
+eaa <- function(coc, npv, n) {
+  ans <- (coc * npv) / (1 - (1 + coc)^(-n))
+  print(noquote(paste("EAA: $", round(ans, 2), sep = "")))
+}
+
