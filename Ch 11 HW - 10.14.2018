@@ -1,0 +1,88 @@
+#Q2
+atcod <- function(coup, par, t) {
+  before.tax <- coup / par
+  x <- (before.tax) * (1 - t)
+  print(noquote(paste("After-tax cost of debt: ", x * 100, "%", sep = "")))
+}
+
+#Q3
+rps <- function(float, par, dps) {
+  rec <- par - (par * float)
+  under <- (par * float)
+  print(noquote(paste("Receive: $", rec, sep ="")))
+  print(noquote(paste("Underwriter: $", under, sep = "")))
+  
+  r.ps <- dps / (par*(1 - float))
+  print(noquote(paste("Cost of Preferred Stock: ", round(r.ps * 100, 3), "%", sep = "")))
+  
+}
+
+#Q4
+ce <- function(rf,rp,b) {
+  x <- rf + rp * b
+  print(noquote(paste("CAPM Approach: ", x * 100, "%", sep = "")))
+}
+
+rs <- function(yield, rp) {
+  x <- yield + rp
+  print(noquote(paste("Risk Premium Approach: ", x * 100, "%", sep = "")))
+}
+
+div <- function(share, div, g) {
+  r.s <- (div/share) + g
+  print(noquote(paste("Dividend Approach: ", round(r.s * 100, 3), "%", sep = "")))
+}
+
+growth <- function(roe, div) {
+  ret <- (100-div)/100
+  g = roe * ret
+  print(noquote(paste("Estimated growth rate: ", g, sep = "")))
+}
+
+#Q5
+cost.of.equity <- function(beta,rf,mr) {
+  r.s <- rf + (mr - rf) * beta
+  print(noquote(paste("Cost of Equity: ", r.s * 100 , "%", sep = "")))
+}
+
+#Q6
+rate.of.return <- function(initial, float, inflow) {
+  float.cost <- initial * float
+  eror <- (inflow / (initial + float.cost)) - 1
+  print(noquote(paste("Expected Rate of Return: ", round(eror * 100,3) , "%", sep = "")))
+}
+
+common.stock <- function(share, div, growth, float) {
+  r.e <- div / (share * (1 - float)) + growth
+  print(noquote(paste("re = ", round(r.e * 100, 3), "%", sep = "")))
+}
+
+#Q8
+#can control:
+  #dividend payout ratio
+  #Capital Budgeting decision rules
+
+#Q9
+
+wacc <- function(w.d, r.d, t, w.p, r.p, w.c, r.s, r.e) {
+  wacc.re <- w.d*r.d*(1-t) + w.p * r.p + w.c * r.s
+  wacc.nce <- w.d * r.d * (1 - t) + w.p * r.p + w.c * r.e
+  answer <- wacc.nce - wacc.re
+  print(noquote(paste("WACC is ", answer * 100, "% higher", sep = "")))
+  
+}
+
+wacc2 <- function(initial, debt, before.tax.cost, pref, pref.cost, common, common.cost, t) {
+  w.d <- debt / initial
+  w.p <- pref / initial
+  w.c <- common / initial
+  answer <- w.d * before.tax.cost * (1 - t) + w.p * pref.cost + w.c * common.cost
+  print(noquote(paste("WACC = ", round(answer * 100, 3), "%", sep = "")))
+}
+
+
+
+
+
+
+
