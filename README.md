@@ -1,2 +1,2 @@
 # 410-HW
-HW for 410, obviously 
+HW for 410, separated by chapters
